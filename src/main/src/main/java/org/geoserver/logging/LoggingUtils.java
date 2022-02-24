@@ -14,11 +14,13 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.ServletContext;
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.appender.FileAppender;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.properties.PropertiesConfiguration;
+import org.apache.logging.log4j.core.Appender;
 import org.geoserver.platform.GeoServerExtensions;
 import org.geoserver.platform.GeoServerResourceLoader;
 import org.geoserver.platform.resource.Paths;
@@ -59,7 +61,7 @@ public class LoggingUtils {
         // JD: before we wipe out the logging configuration, save any appenders that are not
         // console or file based. This allows for other types of appenders to remain intact
         // when geoserver is reloaded.
-        List<Appender> appenders = new ArrayList<>();
+        List<Appender> appenders = new ArrayList<Appender>();
         Enumeration a = LogManager.getRootLogger().getAllAppenders();
         while (a.hasMoreElements()) {
             Appender appender = (Appender) a.nextElement();
@@ -91,12 +93,13 @@ public class LoggingUtils {
             }
         }
         LogManager.resetConfiguration();
-        PropertyConfigurator.configure(lprops);
+        PropertyConfigurator config = new PropertiesConfiguration(new ConfigurationSource(lprops);
 
         if (!suppressFileLogging) {
             // check resulting configuring of log4j file logger
-            Appender gslf = org.apache.log4j.Logger.getRootLogger().getAppender("geoserverlogfile");
-            if (gslf instanceof org.apache.log4j.FileAppender) {
+            Appender gslf =
+                    org.apache.logging.log4j.Logger.getRootLogger().getAppender("geoserverlogfile");
+            if (gslf instanceof org.apache.logging.log4j.FileAppender) {
                 if (!lprops.containsKey("log4j.appender.geoserverlogfile.File")) {
                     lprops.setProperty("log4j.appender.geoserverlogfile.File", logFileName);
                     PropertyConfigurator.configure(lprops);
@@ -114,12 +117,13 @@ public class LoggingUtils {
                     "Suppressing StdOut logging.  If you want to see GeoServer logs, be sure to look in '"
                             + logFileName
                             + "'");
-            Enumeration allAppenders = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
+            Enumeration allAppenders =
+                    org.apache.logging.log4j.LogManager.getAllAppenders();
             Appender curApp;
             while (allAppenders.hasMoreElements()) {
                 curApp = (Appender) allAppenders.nextElement();
-                if (curApp instanceof org.apache.log4j.ConsoleAppender) {
-                    org.apache.log4j.Logger.getRootLogger().removeAppender(curApp);
+                if (curApp instanceof org.apache.logging.log4j.core.appender.ConsoleAppender) {
+                    org.apache.logging.log4j.LogManager.getRootLogger().removeAppender(curApp);
                 }
             }
         }

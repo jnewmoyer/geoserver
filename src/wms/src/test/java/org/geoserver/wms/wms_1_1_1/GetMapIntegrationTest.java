@@ -37,8 +37,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletResponse;
 import javax.xml.namespace.QName;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.AppenderSkeleton;
+import org.apache.logging.log4j.spi.LoggingEvent;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogBuilder;
@@ -531,7 +531,7 @@ public class GetMapIntegrationTest extends WMSTestSupport {
     public void testLargerThanWorld() throws Exception {
         // setup a logging "bomb" rigged to explode when the warning message we
         // want to eliminate
-        org.apache.log4j.Logger l4jLogger = getLog4JLogger(GetMap.class, "LOGGER");
+        org.apache.logging.log4j.Logger l4jLogger = getLog4JLogger(GetMap.class, "LOGGER");
         l4jLogger.addAppender(
                 new AppenderSkeleton() {
 
@@ -569,14 +569,14 @@ public class GetMapIntegrationTest extends WMSTestSupport {
         assertEquals("inline; filename=sf-states.png", response.getHeader("Content-Disposition"));
     }
 
-    private org.apache.log4j.Logger getLog4JLogger(Class<?> targetClass, String fieldName)
+    private org.apache.logging.log4j.Logger getLog4JLogger(Class<?> targetClass, String fieldName)
             throws NoSuchFieldException, IllegalAccessException {
         Field field = targetClass.getDeclaredField(fieldName);
         field.setAccessible(true);
         Logger jlogger = (Logger) field.get(null);
         Field l4jField = jlogger.getClass().getDeclaredField("logger");
         l4jField.setAccessible(true);
-        org.apache.log4j.Logger l4jLogger = (org.apache.log4j.Logger) l4jField.get(jlogger);
+        org.apache.logging.log4j.Logger l4jLogger = (org.apache.logging.log4j.Logger) l4jField.get(jlogger);
         return l4jLogger;
     }
 

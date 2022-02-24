@@ -11,9 +11,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Level;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.AppenderSkeleton;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.spi.LoggingEvent;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.DataStoreInfo;
@@ -81,8 +81,8 @@ public class UniqueProcessTest extends WPSTestSupport {
 
     @Test
     public void testUniqueDatabaseDelegation() throws Exception {
-        org.apache.log4j.Logger logger =
-                org.apache.log4j.Logger.getLogger(JDBCDataStore.class.getPackage().getName());
+        org.apache.logging.log4j.Logger logger =
+                org.apache.logging.log4j.Logger.getLogger(JDBCDataStore.class.getPackage().getName());
         logger.setLevel(Level.DEBUG);
         logger.removeAllAppenders();
         AtomicBoolean foundDistinctCall = new AtomicBoolean();

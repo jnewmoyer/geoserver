@@ -1021,9 +1021,9 @@
         <version>${slf4j.version}</version>
       </dependency>
       <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17.norce</version>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.17.1</version>
       </dependency>
       <dependency>
         <groupId>com.github.librepdf</groupId>
@@ -1611,8 +1611,6 @@
         <version>2.22.2</version>
         <configuration>
           <runOrder>alphabetical</runOrder>
-          <source>1.8</source>
-          <target>1.8</target>
           <includes>
             <include>**/*Test.java</include>
           </includes>

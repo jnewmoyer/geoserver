@@ -34,9 +34,9 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Level;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.AppenderSkeleton;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.spi.LoggingEvent;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
 import org.custommonkey.xmlunit.exceptions.XpathException;
@@ -1119,7 +1119,7 @@ public class GeoPackageProcessTest extends WPSTestSupport {
                     }
                 };
         // relevant logging happens on the get tiled map logger
-        org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger("org.geoserver.tiles");
+        org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.Logger.getLogger("org.geoserver.tiles");
         logger.setLevel(Level.DEBUG);
         logger.removeAllAppenders();
         logger.addAppender(appender);
